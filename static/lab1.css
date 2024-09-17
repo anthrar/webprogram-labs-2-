@@ -1,0 +1,26 @@
+.oak {
+    background-color:olivedrab;
+    color: black;
+    text-align: center;
+}
+
+header {
+    background-color: greenyellow;
+    color:cornflowerblue;
+    font-family: Verdana;
+    font-size: 15;
+    margin: 0px;
+}
+
+footer {
+    background-color: darkblue;
+    color: darkseagreen;
+    font-family: 'Times New Roman';
+    margin: 0px;
+    font-size: 15;
+    text-align: right;
+    position: fixed;
+    bottom: 0;
+    right: 0;
+    left: 0;
+}
