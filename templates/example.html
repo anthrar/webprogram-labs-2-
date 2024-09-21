@@ -3,12 +3,20 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Красов Павел. Лабораторная работа №2</title>
+    <title>
+        &copy; 
+        {% if name %}
+            {{name}}, 
+        {% else %}
+            Анонимус,
+        {% endif %} 
+        Лабораторная работа №2
+    </title>
     <link rel="stylesheet" href="{{url_for('static', filename = 'main.css')}}">
 </head>
 <body>
     <header>
-        НГТУ, ФБ, WEB-программирование, часть 2, лабораторная работа {{number}}
+        НГТУ, ФБ, WEB-программирование, часть 2, {% if number %}Лабораторная работа 2{% endif %}
     </header>
 
     <main>
@@ -19,7 +27,23 @@
     </main>
     
     <footer>
-        &copy; {{name}}, {{group}}, {{course}} курс, 2024
+        &copy; 
+        {% if name %}
+            {{ name }}, 
+        {% else %}
+            Анонимус,
+        {% endif %}
+        {% if group %}
+            {{ group }}, 
+        {% else %}
+            Одиночка,
+        {% endif %}
+        {% if course %}
+            {{ course }} курс, 
+        {% else %}
+            Отчисленец,
+        {% endif %}
+        2024
     </footer>
 </body>
 </html>
