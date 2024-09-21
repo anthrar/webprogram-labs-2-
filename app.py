@@ -209,5 +209,8 @@ def legend():
 
 @app.route("/lab2/example")
 def example():
-    name = 'Кирар'
-    return render_template('example.html', name=name)
+    name = 'Павел'
+    number = 2
+    group = 'ФБИ-23'
+    course = 3
+    return render_template('example.html', name=name, number=number, group=group, course=course)
