@@ -220,4 +220,16 @@ def example():
         {'name': 'яблоки', 'price': 80}, 
         {'name': 'персики', 'price': 96}
     ]
-    return render_template('example.html', name=name,number=number, group=group, course=course, fruits=fruits)
+    books = [
+        {'author': 'Харлан Элисон','naming':'У меня нет рта, но я должен кричать', 'genre': 'постапокалиптика', 'pages': 10},
+        {'author': 'Кормак Маккарти','naming':'Кровавый меридиан', 'genre': 'Вестерн', 'pages': 480},
+        {'author': 'Дж. М. Кёсемен','naming':'Все грядущие дни', 'genre': 'Научная фантастика', 'pages': 308},
+        {'author': 'Дж. К. Роулинг','naming':'Гарри Поттер и Кубок Огня', 'genre': 'Фэнтези, драма', 'pages': 704},
+        {'author': 'Дрю Карпишин','naming':'Звёздные войны. Старая Республика: Реван', 'genre': 'Научная фантастика', 'pages': 298},
+        {'author': 'Джордж Оруэлл','naming':'Скотный двор', 'genre': 'антиутопия, сатира', 'pages': 256},
+        {'author': 'Джордж Оруэлл','naming':'1984', 'genre': 'антиутопия', 'pages': 320},
+        {'author': 'Тимоти Зан','naming':'Траун', 'genre': 'Героическое зарубежное фэнтези ', 'pages': 480},
+        {'author': 'Стивен Кинг','naming':'Кладбище Домашних животных', 'genre': 'Ужасы', 'pages': 373},
+        {'author': 'Дж.Р.Р.Толкин','naming':'Сильмариллион', 'genre': 'Повесть', 'pages': 365}
+    ]
+    return render_template('example.html', name=name, number=number, group=group, course=course, fruits=fruits, books=books)
