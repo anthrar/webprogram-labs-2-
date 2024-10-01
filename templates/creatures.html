@@ -1,26 +1,13 @@
-<!DOCTYPE html>
-<html lang="ru">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Красов Павел. Лабораторая 2</title>
-</head>
-<body>
-    <header>
-        НГТУ, ФБ, WEB-программирование, часть 2, Лабораторная работа 2
-    </header>
 
-    <main>
-        <h1>Мифические существа</h1>
-        {% for m in monsters %}
-        <h2>{{m.name}}</h2>
-        <img src="/static/{{m.pic}}">
-        <div>{{m.description}}</div>
-        {% endfor %}
-    </main>
+{% extends "base.html" %}
 
-    <footer>
-        &copy; Красов Павел Андреевич, ФБИ-23, 3 курс, 2024
-    </footer>
-</body>
-</html>
+{% block  lab %}Лабораторная работа 2{% endblock %}
+
+{% block main %}
+    <h1>Мифические существа</h1>
+    {% for m in monsters %}
+    <h2>{{m.name}}</h2>
+    <img src="/static/{{m.pic}}">
+    <div>{{m.description}}</div>
+    {% endfor %}
+{% endblock %}
