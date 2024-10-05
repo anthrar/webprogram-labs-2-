@@ -1,0 +1,27 @@
+body {
+    margin-top: 0;
+    background-color: azure;
+}
+
+main {
+    padding: 12px;
+    background-color: lawngreen;
+    margin-bottom: 30px;
+}
+
+header {
+    background-color: blueviolet;
+    text-align: center;
+    margin-bottom: 25px;
+    color: ghostwhite;
+}
+
+footer {
+    text-align: left;
+    color: cornsilk;
+    background-color: maroon;
+    position: fixed;
+    right: 0;
+    left: 0;
+    padding: 11px;
+}
