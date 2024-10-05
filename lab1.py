@@ -2,6 +2,39 @@ from flask import Blueprint, redirect, url_for, render_template
 lab1 = Blueprint('lab1',__name__)
 
 
+@lab1.route("/menu")
+def menu():
+    return """
+<!doctype html>
+<html>
+    <head>
+        <title>Красов Павел Андреевич, лабораторная 1</title>
+    </head>
+    <body>
+        <header>
+            НГТУ, ФБ, WEB-программирование, часть 2
+        </header>
+
+        <h1>web-сервер на flask</h1>
+
+        <h2>Меню</h2>
+        <ul>
+        <li><a href = "/lab1">Первая лабораторная</a></li>
+        </ul>
+        <ul>
+        <li><a href = "/lab2">Вторая лабораторная</a></li>
+        </ul>
+        <ul>
+        <li><a href = "/lab3">Третья лабораторная</a></li>
+        </ul>
+        <footer>
+            &copy; Красов Павел, ФБИ-23, 3 курс, 2024
+        </footer>
+    </body>
+</html>
+"""
+
+
 @lab1.route("/lab1/")
 def lab():
     return """
