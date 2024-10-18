@@ -173,21 +173,21 @@ LEGO_sets = [
         {"name": "76057 - Последний бой паутинных воинов", "price": 9500, "series": "Marvel", "manufacture_year": 2016},
     ]
 
-@lab3.route('/lab3/search.html')
+@lab3.route('/lab3/search')
 def search_LEGO_sets():
-    min_price = int(request.args.get('min_price', 0))
-    max_price = int(request.args.get('max_price', 10000))
+    min_price = int(request.args.get("min_price", "0"))
+    max_price = int(request.args.get("max_price", "10000"))
     filtered_LEGO_sets = [set for set in LEGO_sets
                         if min_price <= set['price'] <= max_price]
     return render_template('lab3/search.html', LEGO_sets=filtered_LEGO_sets, min_price=min_price, max_price=max_price)
 
 @lab3.route('/lab3/lego_index')
 def index():
-    return render_template('lab3/index.html', LEGO_sets=LEGO_sets)
+    return render_template('lab3/lego_index.html', LEGO_sets=LEGO_sets)
 
 @lab3.route('/lab3/del_settings')
 def del_settings():
-    resp = make_response(redirect('/lab3/setttings'))
+    resp = make_response(redirect('/lab3/settings'))
     cookies = request.cookies.keys()
     for cookie in cookies:
         resp.set_cookie(cookie, '', expires=0)
