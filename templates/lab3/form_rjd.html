@@ -1,0 +1,71 @@
+{% extends "base.html" %}
+
+{% block lab %} Лабораторнаая работа 3{% endblock %}
+
+{% block main %}
+
+    <h1>Заполнение данных пасажира</h1>
+    <form action="ticket">
+        <label>ФИО пасажира:</label>
+        <div>
+            <input type="text" placeholder="" name="user" value="{{ user or '' }}">
+            <span class="error">{{ errors.user }}</span>
+        </div>
+
+        <label>Ваш возраст:</label>
+        <div>
+            <input type="number" placeholder="" name="age" min="1" max="120" value="{{ age or '' }}">
+            <span class="error">{{ errors.age }}</span>
+        </div>
+
+        <label>Полка:</label>
+        <div>
+            <select name="place">
+                <option value="up">Верхняя</option>
+                <option value="low">Нижняя (+100 рублей)</option>
+                <option value="side_low">Боковая нижняя (+100 рублей)</option>
+                <option value="side_up">Боковая верхняя</option>
+            </select>
+            <span class="error">{{ errors.place }}</span>
+        </div>
+
+        <label>Дополнительные услуги:</label>
+        <br>
+        <label>
+            <input type="checkbox" name="underwear" checked>Постельное бельё (+75 рублей)
+        </label>
+        <br>
+        <label>
+            <input type="checkbox" name="luggage" checked>Багаж (+250 рублей)
+        </label>
+        <br>
+        <label>
+            <input type="checkbox" name="belay" checked>Страховка (+150 рублей)
+        </label>
+
+        <br>
+        <label>Путь:</label>
+        <div>Пункт выезда:</div>
+        <div>
+            <input type="text" name="departure">
+            <span class="error">{{ errors.departure }}</span>
+        </div>
+        <div>Пункт назначения:</div>
+        <div>
+            <input type="text" name="arrival">
+            <span class="error">{{ errors.arrival }}</span>
+        </div>
+
+        <div>Дата поездки:</div>
+        <div>
+            <input type="date" name="date">
+            <span class="error">{{ errors.date }}</span>
+        </div>
+
+        <div>
+            <button type="submit">Отправить</button>
+        </div>
+    </form>
+
+
+{% endblock %}
