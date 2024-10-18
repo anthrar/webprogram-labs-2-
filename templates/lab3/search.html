@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+
+{% block lab %} Лабораторнаая работа 3{% endblock %}
+
+{% block main %}
+    <h1>Поиск товаров</h1>
+    <form id="search-form">
+        <label for="min-price">Минимальная цена:</label>
+        <input type="number" id="min-price" name="min-price">
+        <label for="max-price">Максимальная цена:</label>
+        <input type="number" id="max-price" name="max-price">
+        <button type="button" onclick="searchLEGO_sets()">Искать</button>
+    </form>
+    <div id="results"></div>
+    <script>
+        function searchLEGO_setss() {
+            const minPrice = document.getElementById('min-price').value;
+            const maxPrice = document.getElementById('max-price').value;
+            const url = search.html?min_price=${minPrice}&max_price=${maxPrice};
+            window.location.href = url;
+        }
+    </script>
+    <table>
+        <thead>
+            <tr>
+                <th>Название</th>
+                <th>Цена</th>
+                <th>Серия</th>
+                <th>Год выпуска</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for LEGO_sets in LEGO_setss %}
+            <tr>
+                <td>{{ LEGO_sets.name }}</td>
+                <td>{{ LEGO_sets.price }}</td>
+                <td>{{ LEGO_sets.series }}</td>
+                <td>{{ LEGO_sets.manufacture_year }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}

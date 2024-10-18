@@ -93,7 +93,7 @@ def oak():
 
         <div class="oak">
             <h1>Дуб</h1>
-            <img src="''' + url_for('static', filename = 'oak.jpg') + ''' ">
+            <img src="''' + url_for('static', filename = 'lab1/oak.jpg') + ''' ">
         </div>
 
         <footer>
@@ -119,7 +119,7 @@ def student():
         </header>
 
         <p>Красов Павел Андреевич</p>
-            <img src="''' + url_for('static', filename = 'лого НГТУ.jpeg') + ''' ">
+            <img src="''' + url_for('static', filename = 'lab1/лого НГТУ.jpeg') + ''' ">
 
         <footer>
             &copy; Красов Павел, ФБИ-23, 3 курс, 2024
@@ -162,7 +162,7 @@ def python():
         (англ. Python Enhancement Proposal) — предложений по развитию Python.</p>
         <p>
 
-            <img src="''' + url_for('static', filename = 'pechal.jpg') + ''' ">
+            <img src="''' + url_for('static', filename = 'lab1/pechal.jpg') + ''' ">
         </p>
 
         <footer>
@@ -203,7 +203,7 @@ def legend():
         Она была снова изгнана человеческими военными силами.</p>
 
         <p>
-            <img src="''' + url_for('static', filename = 'тамамо.jpg') + ''' ">
+            <img src="''' + url_for('static', filename = 'lab1/тамамо.jpg') + ''' ">
         </p>
 
         <footer>

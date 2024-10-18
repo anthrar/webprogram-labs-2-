@@ -26,11 +26,11 @@ def example():
         {'author': 'Стивен Кинг','naming':'Кладбище Домашних животных', 'genre': 'Ужасы', 'pages': 373},
         {'author': 'Дж.Р.Р.Толкин','naming':'Сильмариллион', 'genre': 'Повесть', 'pages': 365}
     ]
-    return render_template('example.html', name=name, number=number, group=group, course=course, fruits=fruits, books=books)
+    return render_template('lab2/example.html', name=name, number=number, group=group, course=course, fruits=fruits, books=books)
 
 @lab2.route('/lab2/')
 def lab():
-    return render_template('lab2.html')
+    return render_template('lab2/lab2.html')
 
 @lab2.route('/lab2/creatures')
 def creatures():
@@ -52,4 +52,4 @@ def creatures():
             вылетают молнии, миф о которой распространен в Южной Африке
          '''}
     ]
-    return render_template('creatures.html', monsters=monsters)
+    return render_template('lab2/creatures.html', monsters=monsters)

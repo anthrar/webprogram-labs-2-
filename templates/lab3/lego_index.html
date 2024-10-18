@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+
+{% block lab %} Лабораторная работа 3{% endblock %}
+
+{% block main %}
+    <h1>Результаты поиска по цене от {{ min_price }} до {{ max_price }}</h1>
+    <table>
+        <thead>
+            <tr>
+                <th>Название</th>
+                <th>Цена</th>
+                <th>Серия</th>
+                <th>Год выпуска</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for LEGO_sets in LEGO_sets %}
+            <tr>
+                <td>{{ LEGO_sets.name }}</td>
+                <td>{{ LEGO_sets.price }}</td>
+                <td>{{ LEGO_sets.series }}</td>
+                <td>{{ LEGO_sets.manufacture_year }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}
