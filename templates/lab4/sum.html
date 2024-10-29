@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+
+{% block  lab %}Сложение чисел{% endblock %}
+
+{% block main %}
+    <h1>Сложение чисел</h1>
+    {{x1}}+{{x2}} = {{result}}
+
+    <div>
+        <ol>
+            <li><a href="/lab4/sum-form">Заново</a></li>
+        </ol>
+    </div>
+{% endblock %}
