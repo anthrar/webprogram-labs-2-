@@ -96,6 +96,8 @@ tree_count = 0
 @lab4.route("/lab4/tree", methods=['GET', 'POST'])
 def tree():
     global tree_count
+    cut_disabled = ''
+    plant_disabled = ''
     if request.method == 'GET':
         return render_template('lab4/tree.html', tree_count=tree_count)
     
@@ -105,6 +107,17 @@ def tree():
         tree_count -=1
     elif operation =='plant':
         tree_count +=1
+    
+    if tree_count<0:
+        cut_disabled = 'disabled'
+        return render_template('lab4/tree.html', error ='Счётчик не может быть отрицательным!', 
+                               cut_disabled=cut_disabled)
+    
+
+    if tree_count>7:
+        plant_disabled = 'disabled'
+        return render_template('lab4/tree.html', error ='Счётчик не может быть больше трёх!', 
+                               plant_disabled=plant_disabled)
 
     return redirect('/lab4/tree')
 
