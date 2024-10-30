@@ -123,10 +123,10 @@ def tree():
 
 
 users = [
-    {'login': 'alex', 'password': '123'},
-    {'login': 'bob', 'password': '555'},
-    {'login': 'paul', 'password': '777'},
-    {'login': 'jack', 'password': '906'},
+    {'login': 'alex', 'password': '123', 'name': 'Alexandr Smith', 'sex': 'male'},
+    {'login': 'bob', 'password': '555', 'name': 'Robert Kalter', 'sex': 'male'},
+    {'login': 'paul', 'password': '777', 'name': 'Pavel Redful', 'sex': 'male'},
+    {'login': 'jack', 'password': '906', 'name': 'Jacob Witling', 'sex': 'male'},
 ]
 
 @lab4.route("/lab4/login", methods=['GET', 'POST'])
@@ -135,24 +135,44 @@ def login():
         if 'login' in session:
             authorized = True
             login = session['login']
+            name = session['name']
         else:
             authorized = False
             login = ''
-        return render_template('lab4/login.html', login = login, authorized = authorized)
+            name = ''
+        return render_template('lab4/login.html', login = login, authorized = authorized, name=name)
     
     login = request.form.get('login')
     password = request.form.get('password')
 
+    if login =='':
+        return render_template('lab4/login.html', error='Не введён логин')
+    if password == '':
+        return render_template('lab4/login.html', error='Не введён пароль')
+    
     for user in users:
         if login == user['login'] and password == user['password']:
             session['login'] = login
+            session['name'] = user['name']
             return redirect('/lab4/login')
     
     error = 'Неверные логин и/или пароль'
-    return render_template('lab4/login.html', error = error, authorized = False)
+    return render_template('lab4/login.html', error = error, authorized = False, login_value = login)
 
 
 @lab4.route("/lab4/logout", methods=['POST'])
 def logout():
     session.pop('login', None)
     return redirect('/lab4/login')
+
+
+@lab4.route("/lab4/fridge")
+def fridge_temp():
+    temp = request.form.get('temp')
+    if temp =='':
+        return render_template('lab4/fridge.html', error = 'Ошибка: не задана температура')
+    if temp<-12:
+        return render_template('lab4/fridge.html', message = 'Не удалось установить температуру - слишком низкое значение')
+    if temp>-1:
+        return render_template('lab4/fridge.html', message = 'Не удалось установить температуру - слишком высокое значение')
+    return render_template('lab4/fridge.html')
