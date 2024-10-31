@@ -186,3 +186,39 @@ def fridge_temp():
     if temp>-4 and temp<-1:
         return render_template('lab4/fridge.html', temp=temp, message = f'Установлена температура:{temp}°C ❄')
     return render_template('lab4/fridge.html', temp=temp)
+
+
+@lab4.route("/lab4/corn", methods=['GET', 'POST'])
+def grain_order():
+    if request.method == 'GET':
+        return render_template('lab4/corn.html')
+
+    corn = request.form.get('corn')
+    weight = request.form.get('weight')
+
+    if not weight:
+        return render_template('lab4/corn.html', error='Пожалуйста, укажите вес заказа.')
+    
+    weight = float(weight)
+    if weight <= 0:
+        return render_template('lab4/corn.html', error='Вес заказа должен быть больше 0.')
+    
+    price_for_ton = {
+            'ячмень': 12345,
+            'овёс': 8522,
+            'пшеница': 8722,
+            'рожь': 14111
+        }[corn]
+    
+    total_price = weight * price_for_ton
+
+    if weight > 500:
+        return render_template('lab4/corn.html', error='Такого объема зерна нет в наличии.')
+
+    if weight > 50:
+        discount = 0.1 * total_price
+        total_price -= discount
+        return render_template('lab4/corn.html', message=f'Заказ успешно сформирован. Вы заказали {weight} тонн {corn}. Вес: {weight} т. Сумма к оплате: {total_price:.2f} руб. Применена скидка за большой объем - {discount:.2f} руб.')
+    
+    return render_template('lab4/corn.html', message=f'Заказ успешно сформирован. Вы заказали {weight} тонн {corn}. Вес: {weight} т. Сумма к оплате: {total_price:.2f} руб.')
+
