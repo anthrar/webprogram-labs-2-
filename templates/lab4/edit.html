@@ -1,0 +1,55 @@
+{% extends "base.html" %}
+
+{% block  lab %}Изменение Данных пользователей{% endblock %}
+
+{% block main %}
+<h1>Редактировать себя</h1>
+<div>
+    <table>
+        <thead>
+            <tr>
+                <th>Логин</th>
+                <th>Пароль</th>
+                <th>Имя</th>
+                <th>Пол</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for user in users %}
+            <tr>
+                <td>{{ user['login'] }}</td>
+                <td>{{ user['password'] }}</td>
+                <td>{{ user['name'] }}</td>
+                <td>{{ user['sex'] }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% if error %}
+    <div style="color: red;">{{ error }}</div>
+{% endif %}
+{% if message %}
+    <div style="color: green;">{{ message }}</div>
+{% endif %}
+<form action="/lab4/edit_user" method="post">
+    <div>
+        <label for="login">Логин:</label>
+        <input type="text" id="login" name="login" value="{{ login }}">
+    </div>
+    <div>
+        <label for="password">Пароль:</label>
+        <input type="text" id="password" name="password" value="{{ password }}">
+    </div>
+    <div>
+        <label for="name">Введите имя:</label>
+        <input type="text" id="name" name="name" value="{{ name }}">
+    </div>
+    <div>
+        <label for="sex">Введите пол:</label>
+        <input type="text" id="sex" name="sex" value="{{ sex }}">
+    </div>
+    <button type="submit">Изменить данные о себе</button>
+</form>
+{% endblock %}
+

@@ -1,4 +1,5 @@
 from flask import Blueprint, redirect, url_for, render_template, request, session
+import json
 lab4 = Blueprint('lab4',__name__)
 
 @lab4.route("/lab4/")
@@ -122,15 +123,10 @@ def tree():
     return redirect('/lab4/tree')
 
 
-users = [
-    {'login': 'alex', 'password': '123', 'name': 'Alexandr Smith', 'sex': 'male'},
-    {'login': 'bob', 'password': '555', 'name': 'Robert Kalter', 'sex': 'male'},
-    {'login': 'paul', 'password': '777', 'name': 'Pavel Redful', 'sex': 'male'},
-    {'login': 'jack', 'password': '906', 'name': 'Jacob Witling', 'sex': 'male'},
-]
-
 @lab4.route("/lab4/login", methods=['GET', 'POST'])
 def login():
+    with open("./users.json", "r") as f:
+        users = json.load(f)
     if request.method == 'GET':
         if 'login' in session:
             authorized = True
@@ -222,3 +218,93 @@ def grain_order():
     
     return render_template('lab4/corn.html', message=f'Заказ успешно сформирован. Вы заказали {weight} тонн {corn}. Вес: {weight} т. Сумма к оплате: {total_price:.2f} руб.')
 
+
+@lab4.route("/lab4/registration", methods=['GET', 'POST'])
+def registration():
+    with open("./users.json", "r") as f:
+        users = json.load(f)
+    if request.method == 'GET':
+        return render_template('lab4/registration.html', users=users)
+    
+    login = request.form.get('login')
+    password = request.form.get('password')
+    name = request.form.get('name')
+    sex = request.form.get('sex')
+    
+    if login =='':
+        return render_template('lab4/registration.html', error='Не введён логин', login=login, password=password, name=name, sex=sex)
+    if password == '':
+        return render_template('lab4/registration.html', error='Не введён пароль', login=login, password=password, name=name, sex=sex)
+    if name =='':
+        return render_template('lab4/registration.html', error='Введите имя', login=login, password=password, name=name, sex=sex)
+    if sex == '':
+        return render_template('lab4/registration.html', error='Укажите свой пол', login=login, password=password, name=name, sex=sex)
+
+    new_user = {'login': login, 'password': password, 'name': name, 'sex': sex}
+    users.append(new_user)
+    with open("./users.json", "w") as f:
+        json.dump(users, f)
+    session["login"] = login
+    session['name'] = name
+    return redirect('/lab4/edit_user')
+
+
+@lab4.route("/lab4/del_user", methods=['GET', 'POST'])
+def del_user():
+    with open("./users.json", "r") as f:
+        users = json.load(f)
+    if 'login' not in session:
+            return redirect('/lab4/login')
+    
+    login = session['login']
+    new_users = []
+    for user in users:
+        if login != user['login']:
+            new_users.append(user)
+    users = new_users
+    del session["login"]
+    with open("./users.json", "w") as f:
+        json.dump(users, f)
+    return redirect('/lab4/registration')
+
+
+@lab4.route("/lab4/edit_user", methods=['GET', 'POST'])
+def edit_user():
+    with open("./users.json", "r") as f:
+        users = json.load(f)
+    if 'login' not in session:
+        return redirect('/lab4/login')
+    if request.method == 'GET':
+        user = next(u for u in users if u["login"] == session["login"])
+        return render_template('lab4/edit.html', users=users, login=user["login"], password=user["password"], name=user["name"], sex=user["sex"])
+    
+    login = request.form.get('login')
+    password = request.form.get('password')
+    name = request.form.get('name')
+    sex = request.form.get('sex')
+    
+    if login =='':
+        return render_template('lab4/edit.html', error='Не введён логин', login=login, password=password, name=name, sex=sex)
+    if password == '':
+        return render_template('lab4/edit.html', error='Не введён пароль', login=login, password=password, name=name, sex=sex)
+    if name =='':
+        return render_template('lab4/edit.html', error='Введите имя', login=login, password=password, name=name, sex=sex)
+    if sex == '':
+        return render_template('lab4/edit.html', error='Укажите свой пол', login=login, password=password, name=name, sex=sex)
+    
+    new_users = []
+    for user in users:
+        if user["login"] == session["login"]:
+            new_users.append({"login": login, "password": password, "name": name, "sex": sex})
+        else:
+            new_users.append(user)
+    users = new_users
+    session["login"] = login
+    with open("./users.json", "w") as f:
+        json.dump(users, f)
+
+    return render_template('lab4/edit.html', users=users)
+
+
+            
+    

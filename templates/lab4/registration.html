@@ -1,0 +1,64 @@
+{% extends "base.html" %}
+
+{% block  lab %}Регистрация{% endblock %}
+
+{% block main %}
+    <h1>Список пользователей</h1>
+    <div>
+        <table>
+            <thead>
+                <tr>
+                    <th>Логин</th>
+                    <th>Пароль</th>
+                    <th>Имя</th>
+                    <th>Пол</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for user in users %}
+                <tr>
+                    <td>{{ user['login'] }}</td>
+                    <td>{{ user['password'] }}</td>
+                    <td>{{ user['name'] }}</td>
+                    <td>{{ user['sex'] }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    <div>
+        {% if session["login"] %}
+            <button onclick="window.location.href = '/lab4/del_user'">Удалить себя</button>
+            <button onclick="window.location.href = '/lab4/edit_user'">Редактировать себя</button>
+        {% endif %}
+    </div>
+    {% if error %}
+        <div style="color: red;">{{ error }}</div>
+    {% endif %}
+    {% if message %}
+        <div style="color: green;">{{ message }}</div>
+    {% endif %}
+    <form method="post">
+        <h1>Регистрация</h1>
+        <div>
+            <label for="login">Логин:</label>
+            <input type="text" id="login" name="login">
+        </div>
+        <div>
+            <label for="password">Пароль:</label>
+            <input type="text" id="password" name="password">
+        </div>
+        <div>
+            <label for="name">Введите имя:</label>
+            <input type="text" id="name" name="name">
+        </div>
+        <div>
+            <label for="sex">Введите пол:</label>
+            <input type="text" id="sex" name="sex">
+        </div>
+        <div>
+            <button type="submit">Войти</button>
+            <button type="reset">Отмена</button>
+        </div>
+    </form>
+{% endblock %}
