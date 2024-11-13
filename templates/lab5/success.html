@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+
+{% block  lab %}Лабораторная работа 5{% endblock %}
+
+{% block main %}
+    <h1>Поздравляем, с успешной регистрацией,{{ login }}! </h1>
+    <div>
+        <ol>
+            <li><a href="/lab5/register">Заново</a></li>
+        </ol>
+    </div>
+{% endblock %}
