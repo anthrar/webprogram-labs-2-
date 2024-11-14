@@ -35,13 +35,13 @@ def register():
     
     conn, cur = db_connect()
 
-    cur.execute(f"Select login From users Where login='{login}';")
+    cur.execute("Select * From users Where login=%s;", (login,))
     if cur.fetchone():
         db_close(conn, cur)
         return render_template('lab5/register.html', error = 'Такой пользователь уже существует!')
     
     password_hash = generate_password_hash(password)
-    cur.execute(f"Insert into users (login, password) Values ('{login}', '{password_hash}');")
+    cur.execute("Insert into users (login, password) Values (%s, %s):" (login, password_hash))
     
     db_close(conn, cur)
     return render_template('lab5/success.html', login=login)
@@ -58,7 +58,7 @@ def login():
     
     conn, cur = db_connect()
 
-    cur.execute(f"Select * From users Where login='{login}';")
+    cur.execute("Select * From users Where login=%s;", (login,))
     user = cur.fetchone()
 
     if not user:
@@ -90,8 +90,8 @@ def create():
     cur.execute("Select * From users Where login=%s;", (login, ))
     user_id = cur.fetchone()["id"]
 
-    cur.execute(f"Insert into articles(user_id, title, article_text) \
-                 Values ({user_id}, '{title}', '{article_text}');")
+    cur.execute("Insert into articles(user_id, title, article_text) \
+                 Values (%s, %s, %s):" (user_id, title, article_text))
     
     db_close(conn, cur)
     return redirect('/lab5')
