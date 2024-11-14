@@ -6,11 +6,14 @@ import sqlite3
 from os import path
 lab5 = Blueprint('lab5',__name__)
 
+DBS = '?'
+
 @lab5.route("/lab5/")
 def lab():
     return render_template('lab5/lab5.html', login = session.get('login'))
 
 def db_connect():
+    global DBS
     if current_app.config['DB_TYPE'] == 'postgres':
         conn = psycopg2.connect(
             host = '127.0.0.1',
@@ -19,6 +22,7 @@ def db_connect():
             password = '777'
         )
         cur = conn.cursor(cursor_factory=RealDictCursor)
+        DBS = '%s'
     else:
         dir_path = path.dirname(path.realpath(__file__))
         db_path = path.join(dir_path, "database.db")
@@ -45,13 +49,13 @@ def register():
     
     conn, cur = db_connect()
 
-    cur.execute("Select * From users Where login=%s;", (login,))
+    cur.execute("Select * From users Where login=" + DBS + ";", (login,))
     if cur.fetchone():
         db_close(conn, cur)
         return render_template('lab5/register.html', error = 'Такой пользователь уже существует!')
     
     password_hash = generate_password_hash(password)
-    cur.execute("Insert into users (login, password) Values (%s, %s):" (login, password_hash))
+    cur.execute("Insert into users (login, password) Values (" + DBS + ", " + DBS + ");", (login, password_hash))
     
     db_close(conn, cur)
     return render_template('lab5/success.html', login=login)
@@ -68,7 +72,7 @@ def login():
     
     conn, cur = db_connect()
 
-    cur.execute("Select * From users Where login=%s;", (login,))
+    cur.execute("Select * From users Where login=" + DBS + ";", (login,))
     user = cur.fetchone()
 
     if not user:
@@ -97,11 +101,11 @@ def create():
     
     conn, cur = db_connect()
 
-    cur.execute("Select * From users Where login=%s;", (login, ))
+    cur.execute("Select * From users Where login=" + DBS + ";", (login, ))
     user_id = cur.fetchone()["id"]
 
     cur.execute("Insert into articles(user_id, title, article_text) \
-                 Values (%s, %s, %s):" (user_id, title, article_text))
+                 Values (" + DBS + ", " + DBS + ", " + DBS + ");", (user_id, title, article_text))
     
     db_close(conn, cur)
     return redirect('/lab5')
@@ -115,10 +119,10 @@ def list():
     
     conn, cur = db_connect()
 
-    cur.execute("Select id From users Where login=%s;", (login, ))
+    cur.execute("Select id From users Where login=" + DBS + ";", (login, ))
     user_id = cur.fetchone()["id"]
 
-    cur.execute("Select * From articles Where user_id=%s;", (user_id, ))
+    cur.execute("Select * From articles Where user_id=" + DBS + ";", (user_id, ))
     articles = cur.fetchall()
 
     db_close(conn, cur)
