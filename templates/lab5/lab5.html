@@ -18,6 +18,12 @@
         <ul>
             <li><a href="/lab5/create">Создать статью</a></li>
         </ul>
-        <p>{{ user_name }}</p>
+        <p>
+            {% if session['login'] == login %}
+                {{ login }}
+            {% else %}
+                Anonymous
+            {% endif %}
+        </p>
     </div>
 {% endblock %}
