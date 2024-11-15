@@ -87,6 +87,10 @@ def login():
     db_close(conn, cur)
     return render_template('lab5/success_login.html', login=login)
 
+@lab5.route('/lab5/logout', methods = ['POST'])
+def logout():
+    session.pop('login', None)
+    return redirect('/lab5/login')
 
 @lab5.route("/lab5/create", methods = ['GET', 'POST'])
 def create():
@@ -98,7 +102,10 @@ def create():
     
     title = request.form.get('title')
     article_text = request.form.get('article_text')
-    
+    if title == '':
+        return render_template('/lab5/create_article.html', error = 'Статьи без названий быть не может')
+    if article_text == '':
+        return render_template('/lab5/create_article.html', error = 'Ничего не написано')
     conn, cur = db_connect()
 
     cur.execute("Select * From users Where login=" + DBS + ";", (login, ))
@@ -108,8 +115,24 @@ def create():
                  Values (" + DBS + ", " + DBS + ", " + DBS + ");", (user_id, title, article_text))
     
     db_close(conn, cur)
-    return redirect('/lab5')
+    return redirect('/lab5/list')
 
+@lab5.route('/lab5/delete', methods=['GET', 'POST'])
+def delete():
+    login = session.get('login')
+    if not login:
+        return redirect('/lab5/login')
+    
+    id = request.args.get('id')
+
+    conn, cur = db_connect()
+
+    cur.execute("Delete From articles Where id=" + DBS + ";", (id, ))
+
+    conn.commit()
+    db_close(conn, cur)
+
+    return render_template('/lab5/delete_done.html')
 
 @lab5.route('/lab5/list')
 def list():
@@ -126,7 +149,54 @@ def list():
     articles = cur.fetchall()
 
     db_close(conn, cur)
-    return render_template('/lab5/articles.html', articles=articles)
 
+    has_articles = len(articles)
+
+    return render_template('/lab5/articles.html', articles=articles, has_articles=has_articles)
+
+
+
+@lab5.route('/lab5/edit', methods=['GET', 'POST'])
+def edit():
+    login = session.get('login')
+    if not login:
+        return redirect('/lab5/login')
+
+    if request.method == 'GET':
+        id = request.args.get('id')
+        if id =='':
+            return redirect('/lab5/list')
+        
+        conn, cur = db_connect()
+        cur.execute("Select * From articles where id=" + DBS + ";", (id, )) 
+        article = cur.fetchone()
+        db_close(conn, cur)
+
+        if article is None:
+            AssertionError("article is ", article)
+            return redirect('/lab5/list')
+        
+        return render_template('/lab5/edit_article.html', article=article)
+    #post method
+    id = request.form.get('id')
+    title = request.form.get('title')
+    article_text = request.form.get('article_text')
+    if title == '':
+        return render_template('/lab5/edit_article.html', error = 'Статьи без названий быть не может')
+    if article_text == '':
+        return render_template('/lab5/edit_article.html', error = 'Ничего не написано')
+    
+    conn, cur = db_connect()
+
+    cur.execute("Update articles SET title=" + DBS + ", article_text=" + DBS + "  \
+                 where id=" + DBS + ";", (title, article_text, id))
+    conn.commit()
+    
+    db_close(conn, cur)
+    return redirect('/lab5/list')
+
+    
+   
+    
 
 

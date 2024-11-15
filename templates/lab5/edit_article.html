@@ -3,19 +3,21 @@
 {% block  lab %}Лабораторная работа 5{% endblock %}
 
 {% block main %}
-    <h1>Создание статьи</h1>
+    {{ article }}
+    <h1>Редактирование статьи {{ article['title'] }}</h1>
     {% if error %}
         <div style="color: red;">{{ error }}</div>
     {% endif %}
     <form method="post">
+        <input type="hidden" name="id" value="{{ article['id'] }}">
         <div>
             <label>
                 Название статьи:
-                <input type="text" maxlength="50" name="title">
+                <input type="text" maxlength="50" name="title" value="{{ article['title'] }}">
             </label>
         </div>
         <div style="height: 40px; width: 50px;">
-            <textarea name="article_text"></textarea>
+            <textarea name="article_text"> {{ article['article_text'] }} </textarea>
         </div>
         <div>
             <button type="submit">Готово</button>
