@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+
+{% block  lab %}Лабораторная работа 5{% endblock %}
+
+
+{% block main %}
+    <h1>Список пользователей</h1>
+        {% for user in users %}
+            <h3>{{ user['login'] }} </h3>
+        {% endfor %}
+
+{% endblock %}
