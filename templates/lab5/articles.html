@@ -9,6 +9,8 @@
         {% for article in articles %}
             <h2> {{ article['title'] }} </h2>
             <blockquote> {{ article['article_text'] }} </blockquote>
+            <h3 style="color: green; font-family: Arial, Helvetica, sans-serif;">{% if article['is_favorite'] %} любимое {% endif %}</h3>
+            <h3 style="color:sienna; font-family: Cambria, Cochin;">{% if article['is_public'] %} публичное {% endif %}</h3>
             <a href="/lab5/delete?id={{ article['id'] }}">Удалить статью</a>
             <a href="/lab5/edit?id={{ article['id'] }}">Редактировать статью</a>
         {% endfor %}

@@ -5,6 +5,14 @@
 {% block main %}
     <h1>База знаний</h1>
     <div>Тема лабораторной - Flask и БД. Список сделанных страниц</div>
+
+    <h2> Привет, 
+        {% if session['login'] == login %}
+            {{ login }}
+        {% else %}
+            Anonymous
+        {% endif %}
+    </h2>
     <div style="background-color: aqua;">
         <ul>
             <li><a href="/lab5/login">Вход</a></li>
@@ -18,12 +26,12 @@
         <ul>
             <li><a href="/lab5/create">Создать статью</a></li>
         </ul>
-        <p>
-            {% if session['login'] == login %}
-                {{ login }}
-            {% else %}
-                Anonymous
-            {% endif %}
-        </p>
+        <ul>
+            <li><a href="/lab5/reg_users">Список пользователей</a></li>
+        </ul>
+        <ul>
+            <li><a href="/lab5/logout">Выход</a></li>
+        </ul>
+         
     </div>
 {% endblock %}

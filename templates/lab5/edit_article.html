@@ -20,6 +20,16 @@
             <textarea name="article_text"> {{ article['article_text'] }} </textarea>
         </div>
         <div>
+           Нравится: <input type="checkbox" name="is_favorite" value="True" 
+           {% if article['is_favorite'] %} checked {% endif %}
+           >
+        </div>
+        <div>
+            Публичное: <input type="checkbox" name="is_public" value="True" 
+            {% if article['is_public'] %} checked {% endif %}
+            >
+         </div>
+        <div>
             <button type="submit">Готово</button>
         </div>
     </form>

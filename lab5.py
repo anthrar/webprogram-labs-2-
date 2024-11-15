@@ -87,7 +87,7 @@ def login():
     db_close(conn, cur)
     return render_template('lab5/success_login.html', login=login)
 
-@lab5.route('/lab5/logout', methods = ['POST'])
+@lab5.route('/lab5/logout', methods = ['GET', 'POST'])
 def logout():
     session.pop('login', None)
     return redirect('/lab5/login')
@@ -145,7 +145,7 @@ def list():
     cur.execute("Select id From users Where login=" + DBS + ";", (login, ))
     user_id = cur.fetchone()["id"]
 
-    cur.execute("Select * From articles Where user_id=" + DBS + ";", (user_id, ))
+    cur.execute("Select * From articles Where user_id=" + DBS + " order by is_favorite;", (user_id, ))
     articles = cur.fetchall()
 
     db_close(conn, cur)
@@ -180,6 +180,8 @@ def edit():
     #post method
     id = request.form.get('id')
     title = request.form.get('title')
+    is_favorite = request.form.get('is_favorite')
+    is_public = request.form.get('is_public')
     article_text = request.form.get('article_text')
     if title == '':
         return render_template('/lab5/edit_article.html', error = 'Статьи без названий быть не может')
@@ -188,14 +190,30 @@ def edit():
     
     conn, cur = db_connect()
 
-    cur.execute("Update articles SET title=" + DBS + ", article_text=" + DBS + "  \
-                 where id=" + DBS + ";", (title, article_text, id))
+    cur.execute("Update articles SET title=" + DBS + ", article_text=" + DBS + ",  \
+                 is_favorite=" + DBS + ", is_public=" + DBS + " \
+                    where id=" + DBS + ";", (title, article_text, is_favorite, 
+                                            is_public, id))
     conn.commit()
     
     db_close(conn, cur)
     return redirect('/lab5/list')
 
+@lab5.route('/lab5/reg_users')
+def reg_users():
+    login = session.get('login')
+    if not login:
+        return redirect('/lab5/login')
     
+    conn, cur = db_connect()
+
+    cur.execute("Select * From users;")
+    users = cur.fetchall()
+
+    db_close(conn, cur)
+
+    return render_template('/lab5/reg_users.html', users=users)
+
    
     
 
