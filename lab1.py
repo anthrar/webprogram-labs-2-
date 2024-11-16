@@ -33,6 +33,9 @@ def menu():
         <ul>
         <li><a href = "/lab5">Пятая лабораторная</a></li>
         </ul>
+        <ul>
+        <li><a href = "/lab6">Шестая лабораторная</a></li>
+        </ul>
         <footer>
             &copy; Красов Павел, ФБИ-23, 3 курс, 2024
         </footer>
