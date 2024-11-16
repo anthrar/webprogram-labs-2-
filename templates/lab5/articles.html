@@ -11,8 +11,10 @@
             <blockquote> {{ article['article_text'] }} </blockquote>
             <h3 style="color: green; font-family: Arial, Helvetica, sans-serif;">{% if article['is_favorite'] %} любимое {% endif %}</h3>
             <h3 style="color:sienna; font-family: Cambria, Cochin;">{% if article['is_public'] %} публичное {% endif %}</h3>
-            <a href="/lab5/delete?id={{ article['id'] }}">Удалить статью</a>
-            <a href="/lab5/edit?id={{ article['id'] }}">Редактировать статью</a>
+            {% if not article['is_public'] %}  
+                <a href="/lab5/delete?id={{ article['id'] }}">Удалить статью</a>
+                <a href="/lab5/edit?id={{ article['id'] }}">Редактировать статью</a>
+            {% endif %}
         {% endfor %}
     {% else %}
         <p>У вас нет статей</p>

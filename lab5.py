@@ -137,15 +137,18 @@ def delete():
 @lab5.route('/lab5/list')
 def list():
     login = session.get('login')
-    if not login:
-        return redirect('/lab5/login')
-    
+
     conn, cur = db_connect()
 
-    cur.execute("Select id From users Where login=" + DBS + ";", (login, ))
-    user_id = cur.fetchone()["id"]
-
-    cur.execute("Select * From articles Where user_id=" + DBS + " order by is_favorite;", (user_id, ))
+    if login:
+        cur.execute("Select id From users Where login=" + DBS + ";", (login, ))
+        user_id = cur.fetchone()["id"]
+        cur.execute("Select * From articles Where is_public \
+                    union \
+                    Select * From articles Where user_id=" + DBS + " order by is_favorite;", (user_id, ))
+    else:
+        cur.execute("Select * From articles Where is_public order by is_favorite;")
+    
     articles = cur.fetchall()
 
     db_close(conn, cur)
@@ -153,7 +156,6 @@ def list():
     has_articles = len(articles)
 
     return render_template('/lab5/articles.html', articles=articles, has_articles=has_articles)
-
 
 
 @lab5.route('/lab5/edit', methods=['GET', 'POST'])
