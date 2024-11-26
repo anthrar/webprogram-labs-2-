@@ -39,6 +39,8 @@ function getOfficeList() {
 
             ul.appendChild(li);
         }
+        const tc = document.getElementById('totalcost')
+        tc.innerHTML = 'Общая сумма аренды: '+ data.cost + 'рублей'
     });
 }
 
@@ -126,4 +128,5 @@ document.addEventListener('DOMContentLoaded', function() {
 {% block main %}
     <h1>Список кабинетов</h1>
     <ul id="office-list"></ul>
+    <div id="totalcost"></div><br>
 {% endblock %}

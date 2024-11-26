@@ -6,9 +6,20 @@ lab6 = Blueprint('lab6', __name__ )
 offices = []
 for i in range(1, 11):
     if i == 5:
-        offices.append({"number": i, "tenant": "Админ"})
+        offices.append({"number": i, "tenant": "Админ", 'price': 500})
     else:
-        offices.append({"number": i, "tenant": ""})
+        offices.append({"number": i, "tenant": "", 'price': 1000})
+
+def TotalCost():
+    cost = 0
+    login = session.get('login')
+    if not login:
+        return 0
+    
+    for office in offices:
+        if office['tenant'] == login:
+            cost += office['price']
+    return cost
 
 
 
@@ -25,6 +36,7 @@ def api():
         return {
             'jsonrpc': '2.0', 
             'result': offices,
+            'cost': TotalCost(),
             'id': id
         }
     
@@ -100,6 +112,7 @@ def api():
                     'result': 'success',
                     'id': id
                 }
+
 
     return {
             'jsonrpc': '2.0', 
