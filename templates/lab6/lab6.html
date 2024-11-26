@@ -25,16 +25,19 @@ function getOfficeList() {
         for (let i=0; i<office_list.length; i++) {
             const office = office_list[i];
             const li = document.createElement('li');
-            li.innerText = `${office.number}: ${office.tenant || 'свободен'}`; 
+            li.innerHTML = `<div class=login>${office.number}: ${office.tenant || 'свободен'}</div>`; 
+            li.className = office.tenant ? "booked" : '';
 
             const bookingButton = document.createElement('button'); 
             bookingButton.innerText = 'зарезервировать';
             bookingButton.onclick = function() {booking (office.number)};
+            bookingButton.className = 'free';
             li.appendChild(bookingButton);
 
             const cancelButton = document.createElement('button'); 
             cancelButton.innerText = 'освободить';
             cancelButton.onclick = function() {booking_cancel (office.number)};
+            cancelButton.className = 'cancel';
             li.appendChild(cancelButton);
 
             ul.appendChild(li);
@@ -123,10 +126,63 @@ document.addEventListener('DOMContentLoaded', function() {
     getOfficeList();
 });
 </script>
+<style>
+header {
+    background-color: greenyellow;
+    color:cornflowerblue;
+    font-family: Verdana;
+    font-size: 15;
+    margin: 0px;
+}
+
+footer {
+    background-color: darkblue;
+    color: darkseagreen;
+    font-family: 'Times New Roman';
+    margin: 0px;
+    font-size: 15;
+    text-align: right;
+    position: fixed;
+    bottom: 0;
+    right: 0;
+    left: 0;
+}
+ul {
+    color: green;
+    font-size: larger;
+}
+.booked {
+    color : red
+}
+.free {
+  background-color:darkcyan;
+  border: none;
+  color: white;
+  padding: 10px 13px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 12px;
+}
+.cancel {
+  background-color:rgb(214, 28, 11);
+  border: none;
+  color: white;
+  padding: 10px 13px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 12px;
+}
+.login {
+    width: 200px;
+}
+</style>
+
 {% endblock %}
 
 {% block main %}
-    <h1>Список кабинетов</h1>
+    <h1 style="color: mediumblue;">Список кабинетов</h1>
     <ul id="office-list"></ul>
     <div id="totalcost"></div><br>
 {% endblock %}
