@@ -1,14 +1,62 @@
 from flask import Blueprint, render_template 
 from flask import Blueprint, redirect, url_for, render_template, request, session, current_app
 import psycopg2
+from psycopg2.extras import RealDictCursor
+import sqlite3
+from os import path
+
 lab6 = Blueprint('lab6', __name__ ) 
 
-offices = []
-for i in range(1, 11):
-    if i == 5:
-        offices.append({"number": i, "tenant": "Админ", 'price': 500})
+# database
+DBS = '?'
+def db_connect():
+    global DBS
+    if current_app.config['DB_TYPE'] == 'postgres':
+        conn = psycopg2.connect(
+            host = '127.0.0.1',
+            database = 'pavel_krasov_knowledge_base',
+            user = 'pavel_krasov_knowledge_base',
+            password = '777'
+        )
+        cur = conn.cursor(cursor_factory=RealDictCursor)
+        DBS = '%s'
     else:
-        offices.append({"number": i, "tenant": "", 'price': 1000})
+        dir_path = path.dirname(path.realpath(__file__))
+        db_path = path.join(dir_path, "database.db")
+        conn = sqlite3.connect(db_path)
+        conn.row_factory = sqlite3.Row
+        cur = conn.cursor()
+    
+    return conn, cur
+
+def db_close(conn, cur):
+    conn.commit()
+    cur.close()
+    conn.close()
+
+offices = []
+def getOfficeList():
+    global offices
+
+    conn, cur = db_connect()
+    cur.execute("Select * From offices order by number")
+    offices = cur.fetchall()    
+    db_close(conn, cur)
+
+def updateStatus(number, tenant):
+    conn, cur = db_connect()
+    cur.execute("update offices set tenant=" + DBS + " where number=" + DBS + ";",
+                (tenant, number))
+    conn.commit()
+    db_close(conn, cur)
+
+
+def generateOffices():
+    for i in range(1, 11):
+        if i == 5:
+            offices.append({"number": i, "tenant": "Админ", 'price': 500})
+        else:
+            offices.append({"number": i, "tenant": "", 'price': 1000})
 
 def TotalCost():
     cost = 0
@@ -33,6 +81,7 @@ def api():
     data = request.json
     id = data['id']
     if data['method'] == 'info':
+        getOfficeList()
         return {
             'jsonrpc': '2.0', 
             'result': offices,
@@ -66,6 +115,7 @@ def api():
                     }
 
                 office['tenant'] = login
+                updateStatus(office_number,login)
                 return {
                     'jsonrpc': '2.0',
                     'result': 'success',
@@ -107,6 +157,7 @@ def api():
                     }
 
                 office['tenant'] = ''
+                updateStatus(office_number,'')
                 return {
                     'jsonrpc': '2.0',
                     'result': 'success',
