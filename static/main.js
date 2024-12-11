@@ -34,6 +34,7 @@ function FillFilmList() {
 
             let editButton = document.createElement('button');
             editButton.innerText = 'Edit';
+            editButton.onclick = function() {editFilm(i)}
             td.appendChild(editButton);
         
             let deleteButton = document.createElement('button');
@@ -86,7 +87,7 @@ function addFilm() {
 function SendFilm() {
     const id = document.getElementById('id').value;
     const url = '/lab7/rest-api/films/' + id;
-    const method = 'POST'; 
+    const method = (id ==='') ?  'POST' : 'PUT'; 
     fetch(url, {
         method: method,
         headers: {'Content-Type': 'application/json'}, 
@@ -120,4 +121,20 @@ function SendFilm() {
             document.getElementById('description-error').innerText = error.description;
         }
     });
+}
+
+function editFilm(id) {
+    fetch('/lab7/rest-api/films/' + id)
+    .then(function(response) {
+        return response.json()
+    })  
+    .then(function(film) {
+        document.getElementById('title').value = film.title;
+        document.getElementById('title_ru').value = film.title_ru;
+        document.getElementById('year').value = film.year;
+        document.getElementById('description').value = film.description;
+        document.getElementById('id').value = id;
+    
+        showModal();
+    })
 }
