@@ -38,11 +38,24 @@ function FillFilmList() {
         
             let deleteButton = document.createElement('button');
             deleteButton.innerText = 'Delete';
+            deleteButton.onclick = function() {deleteFilm(i, film.title)}
             td.appendChild(deleteButton);
-            tr.appendChild(td);
+
+            tr.appendChild(td); /// добавляем строчку 
 
             body.appendChild(tr);
         
         }
     })
 }   
+
+function deleteFilm(id, title) {
+    if (!confirm(`Вы действительно хотите удалить фильм "${title}"?`)) {
+        return;
+    }
+    const url = '/lab7/rest-api/films/' + id; 
+    fetch(url, {method: 'DELETE'})
+    .then(function() {
+        FillFilmList();
+    })
+}
