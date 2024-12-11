@@ -59,3 +59,65 @@ function deleteFilm(id, title) {
         FillFilmList();
     })
 }
+
+function showModal(){
+    const modal = document.querySelector('.modal');
+    modal.style.display = 'block';
+}
+function hideModal(){
+    const modal = document.querySelector('.modal');
+    modal.style.display = 'none';
+}   
+
+function cancel(){
+    hideModal();
+}
+
+function addFilm() {
+    
+    document.getElementById('title').value = '';
+    document.getElementById('title_ru').value = '';
+    document.getElementById('year').value = '';
+    document.getElementById('description').value = '';
+    document.getElementById('id').value = '';
+    showModal();
+}
+
+function SendFilm() {
+    const id = document.getElementById('id').value;
+    const url = '/lab7/rest-api/films/' + id;
+    const method = 'POST'; 
+    fetch(url, {
+        method: method,
+        headers: {'Content-Type': 'application/json'}, 
+        body: JSON.stringify({
+            title: document.getElementById('title').value,
+            title_ru: document.getElementById('title_ru').value,
+            year: document.getElementById('year').value,
+            description: document.getElementById('description').value
+        })
+    })
+    .then(function(response) {
+        if (response.ok) {
+            hideModal();
+            FillFilmList();
+        } else {
+            return response.json()
+                
+        }
+    })
+    .then(function(error) {
+        if (error.title) {
+            document.getElementById('title-error').innerText = error.title;
+        }
+        if (error.title_ru) {
+            document.getElementById('title_ru-error').innerText = error.title_ru;
+        }
+        if (error.year) {
+            document.getElementById('year-error').innerText = error.year;
+        }
+        if (error.description) {
+            document.getElementById('description-error').innerText = error.description;
+        }
+    });
+}

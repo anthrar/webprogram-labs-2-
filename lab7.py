@@ -68,4 +68,4 @@ def put_film(id):
 def add_film(): 
     film = request.get_json()
     films.append(film)  
-    return film[-1], 201
+    return films[-1], 201

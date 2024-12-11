@@ -4,6 +4,21 @@
 
 {% block script %} 
 <script src="{{url_for('static', filename = 'main.js')}}"></script>
+<style>
+    .modal {
+        position: absolute;
+        z-index: 100;
+        box-shadow: 3px 3px 5px black;
+        background: white;
+        left: 50%;
+        top: 220px;
+        width: 400px;
+        margin-left: -200px;
+        padding: 20px;
+        display: none
+    }
+    
+</style>
 {% endblock %}
 
 {% block main %}
@@ -28,4 +43,19 @@
     <button onclick="addFilm()">Добавить фильм</button>
 </div>
 
+<div class="modal">
+    <h3>Добавить фильм</h3>
+    <input type="hidden" id="id">
+    <label for="title_ru">Название фильма на русском</label>
+    <input type="text" id="title_ru"><br>  
+    <label for="title">Название фильма на оригинальном языке <BR>
+        (если фильм на русском, то оставить пустым)</label>
+    <input type="text" id="title"><br>
+    <label for="year">Год</label>        
+    <input type="number" id="year"><br>        
+    <label for="description">Описание</label>        
+    <textarea id="description"></textarea><br>      
+    <button id="save-film-button" onclick="SendFilm();">Сохранить</button>        
+    <button id="cancel-film-button" onclick="cancel();">Отменить</button>
+</div>
 {% endblock %}
