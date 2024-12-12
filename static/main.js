@@ -14,13 +14,13 @@ function FillFilmList() {
             let td = document.createElement('td');
             td.innerText = i;
             tr.appendChild(td);
-            td = document.createElement('td');
-            td.innerText = film.title == film.title_ru ? '' : film.title;
-            tr.appendChild(td);
 
             td = document.createElement('td');
-            td.innerText = film.title_ru;
-            tr.appendChild(td); 
+            let title = film.title_ru;
+            title +=  film.title == film.title_ru ? '' : ' (' + film.title + ')'
+            td.innerText = title ;
+            tr.appendChild(td);
+
 
             td = document.createElement('td');    
             td.innerText = film.year;

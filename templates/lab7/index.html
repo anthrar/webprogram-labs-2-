@@ -20,6 +20,41 @@
     .error-message {
         color: red;
     }
+    table {
+        border-collapse: collapse;
+        width: 100%;
+    }
+
+    th, td {
+        border: 1px solid #ddd;
+        padding: 10px;
+        text-align: left;
+    }
+
+    th {
+        background-color: #f0f0f0;
+    }
+
+    td {
+        background-color: #fff;
+    }
+
+    th:first-child, td:first-child {
+        border-left: none;
+    }
+
+    th:last-child, td:last-child {
+        border-right: none;
+    }
+
+    table tr:nth-child(even) {
+        background-color: #f9f9f9;
+    }
+    button {
+        color: blueviolet;
+        padding: 10px 5px;
+        
+    }
 </style>
 {% endblock %}
 
