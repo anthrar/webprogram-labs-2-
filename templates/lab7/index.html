@@ -53,7 +53,7 @@
     button {
         color: blueviolet;
         padding: 10px 5px;
-        
+
     }
 </style>
 {% endblock %}
@@ -83,13 +83,22 @@
 <div class="modal">
     <h3>Добавить фильм</h3>
     <input type="hidden" id="id">
-    <label for="title_ru">Название фильма на русском</label>
-    <input type="text" id="title_ru"><br>  
-    <label for="title">Название фильма на оригинальном языке <BR>
-        (если фильм на русском, то оставить пустым)</label>
-    <input type="text" id="title"><br>
-    <label for="year">Год</label>        
-    <input type="number" id="year"><br>        
+    <label for="title_ru">Название фильма на русском
+        <input type="text" id="title_ru">
+        <div id="title_ru-error" class="error-message"></div>
+        </label><br>
+
+        <label for="title">Название фильма на оригинальном языке <BR>
+            (если фильм на русском, то оставить пустым)
+        <input type="text" id="title">
+        <div id="title-error" class="error-message"></div>
+        </label><br>
+
+        <label for="year">Год       
+            <input type="number" id="year">
+            <div id="year-error" class="error-message"></div>
+            </label><br> 
+
     <label for="description">Описание</label>        
     <textarea id="description"></textarea>
     <div id="description-error" class="error-message"></div>

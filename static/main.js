@@ -10,9 +10,10 @@ function FillFilmList() {
         body.innerHTML = '';
         for (let i=0; i<film_list.length; i++) {
             const film = film_list[i];
+            const id = film['id'];
             let tr = document.createElement('tr');
             let td = document.createElement('td');
-            td.innerText = i;
+            td.innerText = id;
             tr.appendChild(td);
 
             td = document.createElement('td');
@@ -34,12 +35,12 @@ function FillFilmList() {
 
             let editButton = document.createElement('button');
             editButton.innerText = 'Edit';
-            editButton.onclick = function() {editFilm(i)}
+            editButton.onclick = function() {editFilm(id)}
             td.appendChild(editButton);
         
             let deleteButton = document.createElement('button');
             deleteButton.innerText = 'Delete';
-            deleteButton.onclick = function() {deleteFilm(i, film.title)}
+            deleteButton.onclick = function() {deleteFilm(id, film.title)}
             td.appendChild(deleteButton);
 
             tr.appendChild(td); /// добавляем строчку 
@@ -62,7 +63,11 @@ function deleteFilm(id, title) {
 }
 
 function showModal(){
-    document.getElementById('description-error').innerHTML = '';
+    document.getElementById('title-error').innerText = '';
+    document.getElementById('title_ru-error').innerText = '';
+    document.getElementById('year-error').innerText = '';
+    document.getElementById('description-error').innerText = '';    
+
     const modal = document.querySelector('.modal');
     modal.style.display = 'block';
 }
@@ -88,7 +93,7 @@ function addFilm() {
 function SendFilm() {
     const id = document.getElementById('id').value;
     const url = '/lab7/rest-api/films/' + id;
-    const method = (id ==='') ?  'POST' : 'PUT'; 
+    const method = id ==='' ?  'POST' : 'PUT'; 
     fetch(url, {
         method: method,
         headers: {'Content-Type': 'application/json'}, 
@@ -103,14 +108,25 @@ function SendFilm() {
         if (response.ok) {
             hideModal();
             FillFilmList();
+            return {}
         } else {
-            return response.json()              
+            return response.json()
         }
     })
     .then(function(error) {
-        
-        if (error.description) {
-            document.getElementById('description-error').innerText = error.description;
+        if (error) {
+            if (error.title) {
+                document.getElementById('title-error').innerText = error.title;
+            }
+            if (error.title_ru) {
+                document.getElementById('title_ru-error').innerText = error.title_ru;
+            }
+            if (error.year) {
+                document.getElementById('year-error').innerText = error.year;
+            }
+            if (error.description) {
+                document.getElementById('description-error').innerText = error.description;
+            }
         }
     });
 }
