@@ -40,3 +40,25 @@ def register():
 
     return redirect('/lab8/')
 
+@lab8.route("/lab8/login", methods=['GET', 'POST'])
+def login():        
+    if request.method == 'GET':
+        return render_template('lab8/login.html')
+    
+    login = request.form.get('login')
+    password = request.form.get('password')
+
+    user = users.query.filter_by(login=login).first()
+    if user:
+        if check_password_hash(user.password, password):
+            login_user(user, remember=False)
+            return redirect('/lab8')
+        
+    return render_template('lab8/login.html', error = 'Логин и/или пароль неверны.')
+
+@lab8.route('/lab8/articles', methods = ['GET'])
+@login_required
+def articles_list():
+   return "Список статей"
+
+

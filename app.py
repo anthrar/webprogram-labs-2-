@@ -13,9 +13,19 @@ from lab8 import lab8
 
 from flask_sqlalchemy import SQLAlchemy
 from db import db
+from db.models import users
+from flask_login import LoginManager
+
 
 app = Flask(__name__)
 
+login_manager = LoginManager()
+login_manager.login_view = 'lab8.login'
+login_manager.init_app(app)
+
+@login_manager.user_loader
+def load_user(user_id):
+    return users.query.get(int(user_id))
 
 
 app.config['SECRET_KEY'] = os.environ.get('SECRET_KEY ', 'секретно-секретный секрет')
