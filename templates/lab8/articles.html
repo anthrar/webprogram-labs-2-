@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+
+{% block  lab %}Лабораторная работа 8{% endblock %}
+
+{% block main %}
+    <h1>Статьи</h1>
+    <a href="/lab8/create">Добавить новую статью </a><br><br>
+
+    <form action="/lab8/articles" method="GET">
+        <label>Поиск по статьям:</label>
+        <input name="q" type="text" value="{{q}}">
+        <input type="submit" value="Search">
+    </form>
+    {% if search %}
+        <div>Вот какие статьи нашлись: </div><br>
+    {% endif %}
+    {% if articles %}
+        {% for article in articles %}
+            <h2> {{ article['title'] }} </h2>
+                <span style="color: green;" >{% if article['is_favorite'] %} любимое {% endif %}</span>
+                <span style="color:sienna;" >{% if article['is_public'] %} публичное {% endif %}</span>
+            
+            <blockquote> {{ article['article_text'] }} </blockquote>
+            {% if article['login_id'] == current_user.id %}  
+                <a href="/lab8/del/{{ article['id'] }}">Удалить</a>
+                <a href="/lab8/edit/{{ article['id'] }}">Редактировать</a>
+            {% endif %}
+        {% endfor %}
+    {% else %}
+        <p>У вас нет статей</p>
+    {% endif %}
+
+{% endblock %}

@@ -35,7 +35,11 @@
         <a href="/lab8/reg_users">Список пользователей</a>
         <a href="/lab8/logout">Выход</a>
         <div class="username" >
+        {% if current_user.is_authenticated  %}
+            {{ current_user.login }}
+        {% else %}
             Anonymous
+        {% endif %}
         </div>
     
 {% endblock %}
