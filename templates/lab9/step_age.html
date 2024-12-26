@@ -3,15 +3,15 @@
 {% block  lab %}Лабораторная работа 9{% endblock %}
 
 {% block main %}
-    <h1>Поздравления</h1>
 <link type="text/css" rel="stylesheet" href="{{ url_for('static', filename = 'lab9.css') }}">
 
 <div class="lab9back">
     <div class="form-inner">
-        <form method="post" action="/lab9/step/name" onsubmit="return validateName()">
+        <p> Здравствуйте, {{ user['name'] }}!</p>
+        <form method="post" action="/lab9/step/age" onsubmit="return validateAge()">
             <div>
-                <label for="name">Введите ваше имя:</label>
-                <input type="text" id="name" name="name" >
+                <label for="name">Введите ваш возраст:</label>
+                <input type="number" id="age" name="age" max="99" min="1" value=20 >
             </div>
             <div>
                 <button type="submit">Продолжить</button>
@@ -21,14 +21,13 @@
     <div class="form-outer"></div>
 </div>
 <script>
-function validateName() {
-    var name = document.getElementById("name").value;
+function validateAge() {
+    var name = document.getElementById("age").value;
     if (name == "") {
-        alert("Пожалуйста, введите имя");
+        alert("Пожалуйста, введите возраст");
         return false;
     } 
     return true;  
 }
 </script>
 {% endblock %}
-

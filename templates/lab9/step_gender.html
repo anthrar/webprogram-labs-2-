@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+
+{% block  lab %}Лабораторная работа 9{% endblock %}
+
+{% block main %}
+<link type="text/css" rel="stylesheet" href="{{ url_for('static', filename = 'lab9.css') }}">
+
+<div class="lab9back">
+    <div class="form-inner">
+        <p> Ого, {{ user['name'] }}, ваш возраст {{ user['age'] }}</p>
+        <form method="post" action="/lab9/step/gender">
+                <span class="input-title" >Ваш пол:</span>
+                <div class="radio-container">
+                  <label class="radio-label">
+                    <span class="radio-title">Я парень</span>
+                    <input class="radio" type="radio"  name="gender" value="Парень" required>
+                  </label>
+                   или
+                  <label class="radio-label">
+                    <span class="radio-title">Я девушка</span> 
+                    <input class="radio" type="radio" name="gender" value="Девушка">
+                  </label>
+                </div>
+            <div>
+                <button type="submit">Продолжить</button>
+            </div>
+        </form>
+    </div>
+    <div class="form-outer"></div>
+</div>
+
+{% endblock %}

@@ -1,0 +1,34 @@
+{% extends "base.html" %}
+
+{% block  lab %}Лабораторная работа 9{% endblock %}
+
+{% block main %}
+<link type="text/css" rel="stylesheet" href="{{ url_for('static', filename = 'lab9.css') }}">
+
+<div class="lab9back">
+    <div class="form-inner">
+        <p>{{ user['name'] }}, ваш выбор "{{ user['choice1'] }}" <br> 
+            давайте решим что вам больше нравится
+        </p>
+        <form method="post" action="/lab9/step/choice2">
+                <span class="input-title" >Что вы выбираете:</span>
+                <div class="radio-container">
+                  <label class="radio-label">
+                    <span class="radio-title">{{ choice[0]['label'] }}</span>
+                    <input class="radio" type="radio"  name="choice2" value="{{ choice[0]['value'] }}" required>
+                  </label>
+                   или
+                  <label class="radio-label">
+                    <span class="radio-title">{{ choice[1]['label'] }}</span> 
+                    <input class="radio" type="radio" name="choice2" value="{{ choice[1]['value'] }}">
+                  </label>
+                </div>
+            <div>
+                <button type="submit">Продолжить</button>
+            </div>
+        </form>
+    </div>
+    <div class="form-outer"></div>
+</div>
+
+{% endblock %}

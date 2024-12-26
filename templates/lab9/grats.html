@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+
+{% block  lab %}Лабораторная работа 9{% endblock %}
+
+{% block main %}
+<link type="text/css" rel="stylesheet" href="{{ url_for('static', filename = 'lab9.css') }}">
+{% if grats['giftpic'] %}
+    <div class="modal" id="myModal"><img src="{{ url_for('static', filename = 'lab9/' + grats['giftpic']) }}"></div>
+{% endif %}
+    <div class="lab9back">
+        <div class="form-inner">
+            <h2>Ваше Поздравление</h2>
+            <div class="grats">
+                <p>{{ grats['begin'] }}</p>
+                <p>{{ grats['body'] }}</p>
+                <p>{{ grats['user'] }}</p>
+                <p>{{ grats['end'] }}</p>
+            </div>
+{% if grats['giftpic'] %}
+            <a class="gift" onclick="return showModal();"><img src="{{ url_for('static', filename = 'lab9/gift.jpeg') }}"> </a>
+{% endif %}
+        </div>
+
+<script>
+function showModal() {
+  var modal = document.getElementById("myModal");
+  modal.style.display = "block";
+  return false;
+}
+</script>
+
+{% endblock %}
