@@ -6,7 +6,10 @@ lab9 = Blueprint('lab9',__name__)
 
 @lab9.route("/lab9/")
 def main():
-        return render_template('lab9/index.html')
+        if 'user' not in session:
+                return render_template('lab9/index.html')
+        else:
+                return redirect(url_for('lab9.show_grats'))
 
 # tag задает текущий шаг - какие данные нужно собирать
 # tag = 'name' - собираем имя и т.д 
@@ -18,7 +21,7 @@ def step(tag):
 
     # незнакомые теги игнорируем
     if tag not in tag_step:
-        return redirect(url_for('lab9.index'))
+        return redirect(url_for('lab9.main'))
 
     # храним данные в сессии, в словарике user, если его нет, значит создаем пустой
     user = session['user'] if 'user' in session else {}
@@ -61,4 +64,10 @@ def show_grats():
         user = session['user']
         return render_template(f'lab9/grats.html', user=user , grats = getGrats(user))
     else:
-        return redirect(url_for('lab9.index'))
+        return redirect(url_for('lab9.main'))
+    
+@lab9.route("/lab9/reset", methods=["GET"])
+def reset():
+    session.pop('user', None)
+    return redirect(url_for('lab9.main'))
+
