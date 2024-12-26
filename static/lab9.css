@@ -1,0 +1,111 @@
+button {
+    background-color: #e63382;
+    color: #fff;
+    border: 0;
+    border-radius: 5px;
+    font-size: 18px;
+    padding: 20px 50px;
+    font-weight: 500;
+    margin: 30px;
+}
+
+
+button:hover {
+    cursor: pointer;
+    background-color: #f03688;
+}
+
+.lab9back {
+    background-image: url("/static/lab9/background.png");
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+    aspect-ratio: 149/83;
+    height: 100vh;
+    margin: 2% 2% 2% 2%;
+    text-align: center;
+    padding: 0px 0;
+    font-size: 26px;
+    border:#e10e69 2px solid;
+    border-radius: 30px;
+    vertical-align: center;
+}
+.form-outer {
+    display: inline-block;
+    width: 49%;
+    vertical-align: top;
+}
+.form-inner {
+    display: inline-block;
+    width: 50%;
+    vertical-align: top;
+    margin-top: 2%;
+    margin-left: 2%;
+    margin-bottom: 2%;
+    margin-right: 2%;
+    position: relative; 
+    right: 410px;
+
+    border: 2px solid #ccc7d6;
+    border-radius: 15px;
+}
+.form-inner h2 {
+    text-align: center;
+    color:#e10e69;
+}
+.form-bottom {
+    display: block;
+    width: 50%;
+    text-align: center;
+
+}
+.form-bottom a {
+    background-color: #e8149a;
+    color: #fff;
+    border: 0;
+    border-radius: 5px;
+    font-size: 14px;
+    padding: 10px 20px;
+    font-weight: 500;
+    margin: 10px;
+}
+
+label {
+    color:#e63382
+}
+
+input {
+    border: 0;
+    border-bottom: 2px solid #ccc7d6;
+    margin: 20px 0;
+    padding: 5px 20px;
+    font-size: 16px;
+}
+.grats {
+    text-align: left;
+    background-color: beige;
+    color: #e10e69;
+    border: 0;
+    border-radius: 5px;
+    font-size: 18px;
+    padding: 20px 50px;
+    font-weight: 500;
+    margin: 0px;
+}
+.gift img {
+    width: 100px;
+}
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1;
+    left: 20%;
+    top: 10%;
+    width: 400px;
+    overflow: auto;
+    background-color: rgba(255,255,255, 0.4);
+    padding-top: 0px;
+}
+.modal img {
+    width: 400px;
+}
